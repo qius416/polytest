@@ -1,0 +1,93 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="test-header">
+  <template>
+    <style include="iron-flex-factors">
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        --paper-scroll-header-panel-full-header: {
+          background-image: url("/images/header1.png");
+        };
+        /* background for toolbar when it is condensed */
+        --paper-scroll-header-panel-condensed-header: {
+          background-image: url("/images/header2.png");
+        };
+      }
+      paper-toolbar.tall {
+        /* custom toolbar height */
+        height: 256px;
+        background-color: transparent;
+      }
+      paper-toolbar.tall .title {
+        font-size: 40px;
+        margin-left: 60px;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+      }
+      paper-scroll-header-panel {
+        height: 100%;
+      }
+      .content {
+        height: 2000px;
+      }
+      #more,#back{
+        transition: all 0.3s ease-in-out 0s;
+      }
+      #more:hover {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+      #back:hover{
+        -webkit-transform: scale(2,2); /* Safari */
+        transform: scale(3,3);
+      }
+
+    </style>
+    <paper-scroll-header-panel id="panel" condenses header-height="256" condensed-header-height="64">
+      <paper-toolbar class="tall">
+        <paper-icon-button id="back" icon="arrow-back"></paper-icon-button>
+        <div class="flex"></div>
+        <paper-icon-button icon="search"></paper-icon-button>
+        <paper-icon-button id="more" icon="more-vert"></paper-icon-button>
+        <div class="bottom title">Title</div>
+      </paper-toolbar>
+      <div class="content">
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <paper-button raised on-tap="showHeader">click me</paper-button>
+        <paper-button raised on-tap="hideHeader">recover</paper-button>
+      </div>
+    </paper-scroll-header-panel>
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'test-header',
+        showHeader: function(e,detail){
+          var panel = this.$.panel;
+          //panel.keepCondensedHeader = !panel.keepCondensedHeader;
+          panel.condense(true);
+          panel.keepCondensedHeader = true;
+        },
+        hideHeader:function(e,detail){
+          panel.keepCondensedHeader = false;
+        },
+        properties: {}
+
+      });
+    })();
+  </script>
+</dom-module>
